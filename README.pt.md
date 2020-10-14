@@ -50,6 +50,14 @@ Argumentos:
     * **avatarUrl**: string? - Uma url opcional para o avatar do autor.
 * **webhookMessageContent**: Um texto opcional para o contéudo da mensagem do webhook.
 
+Exemplo:
+```lua
+exports['discord-screenshot']:requestClientScreenshotDiscordUpload(GetPlayers()[1], {
+    name: 'Screenshot',
+    avatarUrl: 'https://canary.discord.com/assets/f78426a064bc9dd24847519259bc42af.png'
+}, 'This is an example.')
+```
+
 #### requestCustomClientScreenshotDiscordUpload(player: string | number, webhookUrl: string, webhookMessageAuthor?: DiscordWebhookMessageAuthor, webhookMessageContent?: string)
 Tira uma captura de tela do cliente especificado e a envia para o webhook do discord passado.
 
@@ -60,6 +68,14 @@ Argumentos:
     * **name**: string? - Um nome opcional para o autor.
     * **avatarUrl**: string? - Uma url opcional para o avatar do autor.
 * **webhookMessageContent**: Um texto opcional para o contéudo da mensagem do webhook.
+
+Exemplo:
+```lua
+exports['discord-screenshot']:requestCustomClientScreenshotDiscordUpload(GetPlayers()[1], 'https://canary.discord.com/api/webhooks/412884227131886566/qFcXr19SozY5Bej5H74RdbRscsOjH4eVxgJO5Iwh5iawmkpRfjzijezlwdu15wNsCk4w', {
+    name: 'Screenshot',
+    avatarUrl: 'https://canary.discord.com/assets/f78426a064bc9dd24847519259bc42af.png'
+}, 'This is an example.')
+```
 
 ## Dependências
 
