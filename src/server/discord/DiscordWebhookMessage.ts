@@ -30,7 +30,7 @@ class DiscordWebhookMessage {
     public async toFormData(): Promise<FormData> {
         const formData = new FormData();
 
-        formData.append('content', this.content);
+        if(this.content) formData.append('content', this.content);
 
         if (this.author) {
             if (this.author.name) formData.append('username', this.author.name);

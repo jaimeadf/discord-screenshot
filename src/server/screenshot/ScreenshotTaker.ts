@@ -16,7 +16,7 @@ class ScreenshotTaker {
                 const dataUrl = parseDataUrl(urlString);
                 if (dataUrl) {
                     resolve({
-                        filename: 'screenshot.' + this._options.encoding,
+                        filename: `screenshot.${dataUrl.mimeType.subtype}`,
                         content: dataUrl.body,
                         mimeType: dataUrl.mimeType
                     });

@@ -11,9 +11,9 @@
 
 ## Visão geral
 
-discord-screenshot é um resource para [FiveM](https://fivem.net) e [RedM](https://redm.gg) que tira uma screenshot de um player e a upa para um webhook do discord.
+`discord-screenshot` é um resource para [FiveM](https://fivem.net) e [RedM](https://redm.gg) que tira uma captura de tela de um player e a upa para um webhook do discord.
 
-## Como instalar
+## Instalação
 
 1. Certifique-se que seus artefatos ([windows](https://runtime.fivem.net/artifacts/fivem/build_server_windows/master) ou [linux](https://runtime.fivem.net/artifacts/fivem/build_proot_linux/master)) estejam atualizados.
 2. Baixe o último arquivo em [releases](https://github.com/jaimeadf/discord-screenshot/releases) e extraia na sua pasta resources.
@@ -23,6 +23,8 @@ discord-screenshot é um resource para [FiveM](https://fivem.net) e [RedM](https
 ## Uso
 
 Um comando `/screenshot` é criado de acordo com a framework que você está utilizando.
+
+**Ele só funciona fora de `localhost`!**
 
 ### Standalone
 
@@ -38,15 +40,26 @@ Pode ser usado via console ou por qualquer um com a permissão `screenshot.comma
 
 ### Servidor
 
-#### requestClientDiscordScreenshotUpload(player: string | number, webhookMessageAuthor?: DiscordWebhookMessageAuthor, webhookMessageContent?: string): void
-Solicita que o cliente especificado tire uma captura de tela e a upe para um webhook do discord.
+#### requestClientScreenshotDiscordUpload(player: string | number, webhookMessageAuthor?: DiscordWebhookMessageAuthor, webhookMessageContent?: string)
+Tira uma captura de tela do cliente especificado e a envia para o webhook do discord configurado. 
 
 Argumentos:
 * **player**: O índice do player alvo.
-* **webhookMessageAuthor**: Um objeto opcional contendo as informações do autor da mensagem.
+* **webhookMessageAuthor**: Um objeto opcional contendo as informações do autor da mensagem do webhook.
     * **name**: string? - Um nome opcional para o autor.
-    * **avatarUrl**: string? - Uma url opcional para o autor.
-* **webhookMessageContent**: An optional text for the webhook message.
+    * **avatarUrl**: string? - Uma url opcional para o avatar do autor.
+* **webhookMessageContent**: Um texto opcional para o contéudo da mensagem do webhook.
+
+#### requestCustomClientScreenshotDiscordUpload(player: string | number, webhookUrl: string, webhookMessageAuthor?: DiscordWebhookMessageAuthor, webhookMessageContent?: string)
+Tira uma captura de tela do cliente especificado e a envia para o webhook do discord passado.
+
+Argumentos:
+* **player**: O índice do player alvo.
+* **webhookUrl**: A url do webhook do discord.
+* **webhookMessageAuthor**: Um objeto opcional contendo as informações do autor da mensagem do webhook.
+    * **name**: string? - Um nome opcional para o autor.
+    * **avatarUrl**: string? - Uma url opcional para o avatar do autor.
+* **webhookMessageContent**: Um texto opcional para o contéudo da mensagem do webhook.
 
 ## Dependências
 
@@ -54,7 +67,7 @@ Argumentos:
 
 ## Issues
 
-Reporte qualquer problema que tiver e tente fornecer todas as informações.
+Reporte qualquer problema que tiver e tente fornecer todas as informações sobre ele.
 
 
 ## Contribuindo

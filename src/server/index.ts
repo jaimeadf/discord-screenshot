@@ -18,8 +18,16 @@ const discordScreenshot = new DiscordScreenshot(discordWebhook, screenshotTaker)
 
 const screenshotCommand = new Command('screenshot', new StandaloneScreenshotCommandHandler(discordScreenshot));
 
-global.exports('requestClientDiscordUpload', (player: string | number, webhookMessageAuthor?: DiscordWebhookMessageAuthor, webhookMessageContent?: string): void => {
+global.exports('requestClientScreenshotDiscordUpload', (player: string | number, webhookMessageAuthor?: DiscordWebhookMessageAuthor, webhookMessageContent?: string): void => {
     discordScreenshot.requestClientScreenshotDiscordUpload(player, webhookMessageAuthor, webhookMessageContent);
+});
+
+global.exports('requestCustomClientScreenshotDiscordUpload',
+    (player: string | number, webhookUrl: string, webhookMessageAuthor?: DiscordWebhookMessageAuthor, webhookMessageContent?: string): void => {
+    const customDiscordWebhook = new DiscordWebhook(webhookUrl);
+    const customDiscordScreenshot = new DiscordScreenshot(customDiscordWebhook, screenshotTaker);
+
+    customDiscordScreenshot.requestClientScreenshotDiscordUpload(player, webhookMessageAuthor, webhookMessageContent);
 });
 
 on('onResourceStart', (resourceName: string) => {

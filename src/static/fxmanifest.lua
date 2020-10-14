@@ -2,9 +2,9 @@ fx_version 'adamant'
 game 'common'
 
 author 'Jaime Filho <https://github.com/jaimeadf>'
-description "Takes a player's screenshot and upload it to a discord webhook."
-version '0.9.0'
-url ''
+description "A resource for FiveM and RedM that takes a screenshot of a player and uploads it to a discord's webhook."
+version '1.1.0'
+url 'https://github.com/jaimeadf/discord-screenshot'
 
 server_script 'dist/server.js'
 

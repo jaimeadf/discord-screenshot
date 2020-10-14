@@ -12,7 +12,7 @@ class DiscordScreenshot {
         this._screenshotTaker = screenshotTaker;
     }
 
-    public async requestClientScreenshotDiscordUpload(player: string | number, webhookMessageAuthor: DiscordWebhookMessageAuthor = {}, webhookMessageContent: string = ''): Promise<void> {
+    public async requestClientScreenshotDiscordUpload(player: string | number, webhookMessageAuthor?: DiscordWebhookMessageAuthor, webhookMessageContent?: string): Promise<void> {
         const screenshot = await this._screenshotTaker.takeClientScreenshot(player);
         const webhookMessage = new DiscordWebhookMessage();
         webhookMessage
