@@ -11,8 +11,8 @@ class VrpScreenshotCommandHandler extends ScreenshotCommandHandler {
     }
 
     public async execute(player: number, args: string[], rawCommand: string): Promise<void> {
-        if (player === 0 || await this._vrp.call('hasPermission', await this._vrp.call('getUserId', player), 'screenshot.command')) {
-            const targetUserId = parseInt(args[0]);
+        const targetUserId = parseInt(args[0]);
+        if (targetUserId && player === 0 || await this._vrp.call('hasPermission', await this._vrp.call('getUserId', player), 'screenshot.command')) {
             if (targetUserId) {
                 const targetSource = await this._vrp.call('getUserSource', targetUserId) as number;
                 if (targetSource) {

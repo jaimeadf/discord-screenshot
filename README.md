@@ -30,7 +30,7 @@ A `/screenshot` command is created according to the framework you are using.
 
 ### Standalone
 
-#### /screenshot &lt;player&gt;
+#### /screenshot &lt;player or identificador&gt;
 Can be used via console or by anyone with the `screenshot.command` ace permission.
 
 ### vRP

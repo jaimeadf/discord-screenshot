@@ -28,7 +28,7 @@ Um comando `/screenshot` é criado de acordo com a framework que você está uti
 
 ### Standalone
 
-#### /screenshot &lt;player&gt;
+#### /screenshot &lt;player ou identificador&gt;
 Pode ser usado via console ou por qualquer um com a permissão ace `screenshot.command`.
 
 ### vRP
