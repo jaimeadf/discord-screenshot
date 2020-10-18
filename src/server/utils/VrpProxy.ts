@@ -29,7 +29,7 @@ class VrpProxy {
 
         addEventListener(`${this._name}:${this._identifier}:proxy_res`, (requestId: number, response: unknown[]) => {
             if (this._callbacks.hasOwnProperty(requestId)) {
-                if (response.length === 1) {
+                if (response.length <= 1) {
                     this._callbacks[requestId](response[0]);
                 } else {
                     this._callbacks[requestId](response);
@@ -50,7 +50,7 @@ class VrpProxy {
     }
 
     public async call(handlerName: string, ...args: any[]): Promise<unknown> {
-        return new Promise<unknown>((resolve) => {
+        return new Promise<unknown>(resolve => {
             const id = this._ids.gen();
             this._callbacks[id] = resolve;
             emit(`${this._name}:proxy`, handlerName, args, this._identifier, id);
