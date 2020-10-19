@@ -31,12 +31,12 @@ A `/screenshot` command is created according to the framework you are using.
 ### Standalone
 
 #### /screenshot &lt;player or identifier&gt;
-Can be used via console or by anyone with the `screenshot.command` ace permission.
+Can be used via console or by anyone with the `command.screenshot` ace permission.
 
 ### vRP
 
 #### /screenshot &lt;user_id&gt;
-Can be used via console or by anyone with the `screenshot.command` permission.
+Can be used via console or by anyone with the `command.screenshot` permission.
 
 ## API
 

@@ -5,7 +5,7 @@ import getPlayerIdentifiers from '../../utils/getPlayerIdentifiers';
 
 class StandaloneScreenshotCommandHandler extends ScreenshotCommandHandler {
     public async execute(player: number, args: string[], rawCommand: string): Promise<void> {
-        if (player === 0 || IsPlayerAceAllowed(player.toString(), 'screenshot.command')) {
+        if (player === 0 || IsPlayerAceAllowed(player.toString(), 'command.screenshot')) {
             const target = args[0];
             if (target !== undefined) {
                 let targetPlayer: string | undefined;

@@ -57,7 +57,7 @@ class VrpProxy {
         });
     }
 
-    emit(handlerName: string, ...args: any[]): void {
+    public emit(handlerName: string, ...args: any[]): void {
         emit(`${this._name}:proxy`, handlerName, args, this._identifier, -1);
     }
 }
