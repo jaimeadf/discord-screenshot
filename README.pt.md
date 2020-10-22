@@ -56,8 +56,8 @@ Argumentos:
 Exemplo:
 ```lua
 exports['discord-screenshot']:requestClientScreenshotDiscordUpload(GetPlayers()[1], {
-    name: 'Screenshot',
-    avatarUrl: 'https://canary.discord.com/assets/f78426a064bc9dd24847519259bc42af.png'
+    name = 'Screenshot',
+    avatarUrl = 'https://canary.discord.com/assets/f78426a064bc9dd24847519259bc42af.png'
 }, 'This is an example.')
 ```
 
