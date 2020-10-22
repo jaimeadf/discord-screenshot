@@ -4,10 +4,14 @@
     <a href="https://github.com/GHMatti/ghmattimysql/blob/master/license.md">
         <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License">
     </a>
+</p>
+
+<p>
     <a href="https://discord.gg/xvqfCgg">
-        <img src="https://discordapp.com/api/guilds/753071308010684417/widget.png" alt="Chat">
+        <img src="https://discordapp.com/api/guilds/753071308010684417/widget.png?style=banner2" alt="Chat">
     </a>
 </p>
+
 
 You can also read this README in [Portuguese](https://github.com/jaimeadf/discord-screenshot/blob/master/README.pt.md).
 
@@ -55,8 +59,8 @@ Arguments:
 Example:
 ```lua
 exports['discord-screenshot']:requestClientScreenshotDiscordUpload(GetPlayers()[1], {
-    name: 'Screenshot',
-    avatarUrl: 'https://canary.discord.com/assets/f78426a064bc9dd24847519259bc42af.png'
+    name = 'Screenshot',
+    avatarUrl = 'https://canary.discord.com/assets/f78426a064bc9dd24847519259bc42af.png'
 }, 'This is an example.')
 ```
 
@@ -74,8 +78,8 @@ Arguments:
 Example:
 ```lua
 exports['discord-screenshot']:requestCustomClientScreenshotDiscordUpload(GetPlayers()[1], 'https://canary.discord.com/api/webhooks/412884227131886566/qFcXr19SozY5Bej5H74RdbRscsOjH4eVxgJO5Iwh5iawmkpRfjzijezlwdu15wNsCk4w', {
-    name: 'Screenshot',
-    avatarUrl: 'https://canary.discord.com/assets/f78426a064bc9dd24847519259bc42af.png'
+    name = 'Screenshot',
+    avatarUrl = 'https://canary.discord.com/assets/f78426a064bc9dd24847519259bc42af.png'
 }, 'This is an example.')
 ```
 
