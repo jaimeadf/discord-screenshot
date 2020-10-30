@@ -7,7 +7,7 @@ class Command {
         this.handler = handler;
 
         RegisterCommand(name, (player: number, args: string[], rawCommand: string) =>
-            this.handler?.execute(player, args, rawCommand), false);
+            this.handler?.execute(player.toString(), args, rawCommand), false);
     }
 
     public setHandler(handler: CommandHandler) {

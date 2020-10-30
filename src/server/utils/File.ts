@@ -1,7 +1,7 @@
 import MIMEType from 'whatwg-mimetype';
 
 interface File {
-    filename: string;
+    fileName: string;
     content: Buffer;
     mimeType: MIMEType;
 }

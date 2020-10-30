@@ -1,39 +1,39 @@
 import Settings from './data/Settings';
 
 import DiscordWebhook from './discord/DiscordWebhook';
-import DiscordWebhookMessageAuthor from './discord/DiscordWebhookMessageAuthor';
 
 import ScreenshotTaker from './screenshot/ScreenshotTaker';
-import DiscordScreenshot from './DiscordScreenshot';
+import ScreenshotOptions from './screenshot/ScreenshotOptions';
 
 import Command from './commands/Command';
-import StandaloneScreenshotCommandHandler from './commands/screenshot/StandaloneScreenshotCommandHandler';
+import ScreenshotCommandHandler from './commands/screenshot/ScreenshotCommandHandler';
 import VrpScreenshotCommandHandler from './commands/screenshot/VrpScreenshotCommandHandler';
+import EsxScreenshotCommandHandler from './commands/screenshot/EsxScreenshotCommandHandler';
+
+import DiscordWebhookMessageDto from './dtos/discord/DiscordWebhookMessageDto';
 
 const settings = JSON.parse(LoadResourceFile(GetCurrentResourceName(), 'settings.json')) as Settings;
 
-const discordWebhook = new DiscordWebhook(settings.discordWebhookUrl);
 const screenshotTaker = new ScreenshotTaker(settings.screenshotOptions);
-const discordScreenshot = new DiscordScreenshot(discordWebhook, screenshotTaker);
+const discordWebhook = new DiscordWebhook(settings.discordWebhookUrl);
 
-const screenshotCommand = new Command('screenshot', new StandaloneScreenshotCommandHandler(discordScreenshot));
+const screenshotCommand = new Command('screenshot', new ScreenshotCommandHandler(screenshotTaker, discordWebhook));
 
-global.exports('requestClientScreenshotDiscordUpload', (player: string | number, webhookMessageAuthor?: DiscordWebhookMessageAuthor, webhookMessageContent?: string): void => {
-    discordScreenshot.requestClientScreenshotDiscordUpload(player, webhookMessageAuthor, webhookMessageContent);
+// TODO
+global.exports('requestClientScreenshotUploadToDiscord', (player: string | number, message: DiscordWebhookMessageDto): void => {
 });
 
-global.exports('requestCustomClientScreenshotDiscordUpload',
-    (player: string | number, webhookUrl: string, webhookMessageAuthor?: DiscordWebhookMessageAuthor, webhookMessageContent?: string): void => {
-    const customDiscordWebhook = new DiscordWebhook(webhookUrl);
-    const customDiscordScreenshot = new DiscordScreenshot(customDiscordWebhook, screenshotTaker);
-
-    customDiscordScreenshot.requestClientScreenshotDiscordUpload(player, webhookMessageAuthor, webhookMessageContent);
+// TODO
+global.exports('requestCustomClientScreenshotUploadToDiscord', (player: string | number, webhookUrl: string, options: ScreenshotOptions, message: DiscordWebhookMessageDto): void => {
 });
 
 on('onResourceStart', (resourceName: string) => {
     switch (resourceName) {
         case 'vrp':
-            screenshotCommand.setHandler(new VrpScreenshotCommandHandler(discordScreenshot));
+            screenshotCommand.setHandler(new VrpScreenshotCommandHandler(screenshotTaker, discordWebhook));
+            break;
+        case 'es_extended':
+            screenshotCommand.setHandler(new EsxScreenshotCommandHandler(screenshotTaker, discordWebhook))
             break;
     }
 });

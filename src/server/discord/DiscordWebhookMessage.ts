@@ -1,19 +1,31 @@
 import FormData from 'form-data';
 
-import DiscordWebhookMessageAuthor from './DiscordWebhookMessageAuthor';
 import File from '../utils/File';
+import DiscordEmbed from './DiscordEmbed';
+import DiscordWebhookMessageDto from "../dtos/discord/DiscordWebhookMessageDto";
+
+interface DiscordWebhookMessageAuthor {
+    name?: string;
+    avatarUrl?: string;
+}
 
 class DiscordWebhookMessage {
     private author?: DiscordWebhookMessageAuthor;
     private content?: string;
+    private tts?: boolean;
+    private readonly embeds: DiscordEmbed[];
     private readonly files: File[];
 
     public constructor() {
         this.files = [];
+        this.embeds = [];
     }
 
-    public setAuthor(author: DiscordWebhookMessageAuthor): DiscordWebhookMessage {
-        this.author = author;
+    public setAuthor(name: string, avatarUrl?: string): DiscordWebhookMessage {
+        this.author = {
+            name,
+            avatarUrl
+        };
         return this;
     }
 
@@ -27,20 +39,32 @@ class DiscordWebhookMessage {
         return this;
     }
 
-    public async toFormData(): Promise<FormData> {
+    public addEmbed(embed: DiscordEmbed): DiscordWebhookMessage {
+        this.embeds.push(embed);
+        return this;
+    }
+
+    public toDto(): DiscordWebhookMessageDto {
+        return {
+            username: this.author?.name,
+            avatar_url: this.author?.avatarUrl,
+            content: this.content,
+            tts: this.tts,
+            embeds: this.embeds.map(embed => embed.toDto())
+        };
+    }
+
+    public toFormData(): FormData {
         const formData = new FormData();
 
-        if(this.content) formData.append('content', this.content);
-
-        if (this.author) {
-            if (this.author.name) formData.append('username', this.author.name);
-            if (this.author.avatarUrl) formData.append('avatar_url', this.author.avatarUrl);
-        }
+        formData.append('payload_json', JSON.stringify(this.toDto()), {
+            contentType: 'application/json'
+        });
 
         for (const file of this.files) {
             formData.append('files[]', file.content, {
-                filename: file.filename,
-                contentType: file.mimeType.type
+                filename: file.fileName,
+                contentType: file.mimeType.essence
             });
         }
 

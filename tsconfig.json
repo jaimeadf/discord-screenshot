@@ -3,6 +3,7 @@
     "target": "es2017",
     "module": "commonjs",
     "types": ["@citizenfx/server", "@types/node"],
+    "strict": true,
     "allowSyntheticDefaultImports": true
   },
   "include": [
