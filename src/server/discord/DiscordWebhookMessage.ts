@@ -1,8 +1,9 @@
 import FormData from 'form-data';
 
-import File from '../utils/File';
 import DiscordEmbed from './DiscordEmbed';
-import DiscordWebhookMessageDto from "../dtos/discord/DiscordWebhookMessageDto";
+import DiscordWebhookMessageDto from '../dtos/discord/DiscordWebhookMessageDto';
+
+import File from '../utils/File';
 
 interface DiscordWebhookMessageAuthor {
     name?: string;
@@ -16,9 +17,23 @@ class DiscordWebhookMessage {
     private readonly embeds: DiscordEmbed[];
     private readonly files: File[];
 
-    public constructor() {
-        this.files = [];
+    public constructor(dto?: DiscordWebhookMessageDto) {
         this.embeds = [];
+        this.files = [];
+
+        if (dto) {
+            if (dto.username || dto.avatar_url) {
+                this.author = {
+                    name: dto.username,
+                    avatarUrl: dto.avatar_url
+                };
+            }
+            this.content = dto.content;
+            this.tts = dto.tts;
+            dto.embeds?.forEach(embedDto => {
+                this.embeds.push(new DiscordEmbed(embedDto));
+            });
+        }
     }
 
     public setAuthor(name: string, avatarUrl?: string): DiscordWebhookMessage {
@@ -31,6 +46,11 @@ class DiscordWebhookMessage {
 
     public setContent(content: string): DiscordWebhookMessage {
         this.content = content;
+        return this;
+    }
+
+    public setTts(tts: boolean): DiscordWebhookMessage {
+        this.tts = tts;
         return this;
     }
 

@@ -24,8 +24,8 @@ class DiscordEmbed {
     private author?: DiscordEmbedAuthor;
     private title?: string;
     private url?: string;
-    private readonly fields: DiscordEmbedField[];
     private description?: string;
+    private readonly fields: DiscordEmbedField[];
     private thumbnailUrl?: string;
     private imageUrl?: string;
     private footer?: DiscordEmbedFooter;
@@ -33,6 +33,32 @@ class DiscordEmbed {
 
     public constructor(dto?: DiscordEmbedDto) {
         this.fields = [];
+
+        if (dto) {
+            this.color = dto.color ? Color(dto.color) : undefined;
+            this.author = dto.author ? {
+                name: dto.author.name,
+                url: dto.author.url,
+                iconUrl: dto.author.icon_url
+            } : undefined;
+            this.title = dto.title;
+            this.url = dto.url;
+            this.description = dto.description;
+            dto.fields?.forEach(fieldDto => {
+                this.fields.push({
+                    name: fieldDto.name,
+                    content: fieldDto.value,
+                    inline: fieldDto.inline
+                });
+            });
+            this.thumbnailUrl = dto.thumbnail?.url;
+            this.imageUrl = dto.image?.url;
+            this.footer = dto.footer ? {
+                text: dto.footer.text,
+                iconUrl: dto.footer.icon_url
+            } : undefined;
+            this.timestamp = dto.timestamp ? new Date(dto.timestamp) : undefined;
+        }
     }
 
     public setColor(color: Color): DiscordEmbed {
