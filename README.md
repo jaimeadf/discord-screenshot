@@ -19,6 +19,8 @@ You can also read this README in [Portuguese](https://github.com/jaimeadf/discor
 
 `discord-screenshot` is a resource for [FiveM](https://fivem.net) and [RedM](https://redm.gg) that takes a screenshot of a player and uploads it to a discord's webhook.
 
+[![Showcase](https://img.youtube.com/vi/c9h40LoLky8/maxresdefault.jpg)](https://youtu.be/c9h40LoLky8)
+
 ## Installation
 
 1. Make sure your server artifacts ([windows](https://runtime.fivem.net/artifacts/fivem/build_server_windows/master) or [linux](https://runtime.fivem.net/artifacts/fivem/build_proot_linux/master)) are up to date.

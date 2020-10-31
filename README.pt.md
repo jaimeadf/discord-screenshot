@@ -16,6 +16,8 @@
 
 `discord-screenshot` é um resource para [FiveM](https://fivem.net) e [RedM](https://redm.gg) que tira uma captura de tela de um player e a upa para um webhook do discord.
 
+[![Showcase](https://img.youtube.com/vi/c9h40LoLky8/maxresdefault.jpg)](https://youtu.be/c9h40LoLky8)
+
 ## Instalação
 
 1. Certifique-se que seus artefatos ([windows](https://runtime.fivem.net/artifacts/fivem/build_server_windows/master) ou [linux](https://runtime.fivem.net/artifacts/fivem/build_proot_linux/master)) estejam atualizados.
