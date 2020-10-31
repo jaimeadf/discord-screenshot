@@ -5,22 +5,18 @@ import ScreenshotTaker from '../../screenshot/ScreenshotTaker';
 import DiscordWebhook from '../../discord/DiscordWebhook';
 
 class EsxScreenshotCommandHandler extends ScreenshotCommandHandler {
-    private _esx?: ESXServer;
+    private readonly _esx: ESXServer;
 
     public constructor(screenshotTaker: ScreenshotTaker, discordWebhook: DiscordWebhook) {
         super(screenshotTaker, discordWebhook);
-        emit('esx:getSharedObject', (obj: ESXServer) => {
-            this._esx = obj;
-        });
+        this._esx = global.exports['es_extended'].getSharedObject();
     }
 
     public async execute(player: string, args: string[], rawCommand: string): Promise<void> {
         if (player !== '0') {
-            if (this._esx) {
-                const xPlayer = this._esx.GetPlayerFromId(parseInt(player));
-                if (xPlayer.getGroup() !== 'admin') {
-                    return;
-                }
+            const xPlayer = this._esx.GetPlayerFromId(parseInt(player));
+            if (xPlayer.getGroup() !== 'admin') {
+                return;
             }
         }
 
