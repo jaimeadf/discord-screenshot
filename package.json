@@ -1,6 +1,6 @@
 {
   "name": "discord-screenshot",
-  "version": "1.2",
+  "version": "1.2.0",
   "description": "A resource for FiveM and RedM that takes a screenshot of a player and uploads it to a discord's webhook.",
   "main": "index.js",
   "scripts": {
