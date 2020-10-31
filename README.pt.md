@@ -16,16 +16,18 @@
 
 `discord-screenshot` é um resource para [FiveM](https://fivem.net) e [RedM](https://redm.gg) que tira uma captura de tela de um player e a upa para um webhook do discord.
 
+[![Showcase](https://img.youtube.com/vi/c9h40LoLky8/maxresdefault.jpg)](https://youtu.be/c9h40LoLky8)
+
 ## Instalação
 
 1. Certifique-se que seus artefatos ([windows](https://runtime.fivem.net/artifacts/fivem/build_server_windows/master) ou [linux](https://runtime.fivem.net/artifacts/fivem/build_proot_linux/master)) estejam atualizados.
-2. Baixe o último arquivo em [releases](https://github.com/jaimeadf/discord-screenshot/releases) e extraia na sua pasta resources.
-3. Adicione `ensure screenshot-basic` e `ensure discord-screenshot` no seu server.cfg antes do start de sua framework.
+2. Baixe o último arquivo zip em [releases](https://github.com/jaimeadf/discord-screenshot/releases) e extraia na sua pasta resources.
+3. Adicione `ensure screenshot-basic` e `ensure discord-screenshot` no seu server.cfg.
 4. Configure o resource no arquivo `settings.json` dentro da pasta discord-screenshot.
 
 ## Uso
 
-Um comando `/screenshot` é criado de acordo com a framework que você está utilizando.
+Um comando `/screenshot <alvo>` é criado de acordo com a framework que você está utilizando. Se você passar `-1` como alvo, uma captura da tela de todos no servidor será tirada.
 
 **Ele só funciona fora de `localhost`!**
 
@@ -33,6 +35,11 @@ Um comando `/screenshot` é criado de acordo com a framework que você está uti
 
 #### /screenshot &lt;player ou identificador&gt;
 Pode ser usado via console ou por qualquer um com a permissão ace `command.screenshot`.
+
+### ESX
+
+#### /screenshot &lt;player&gt;
+Pode ser usado via console ou por qualquer admin.
 
 ### vRP
 
@@ -43,41 +50,65 @@ Pode ser usado via console ou por qualquer um com a permissão `command.screensh
 
 ### Servidor
 
-#### requestClientScreenshotDiscordUpload(player: string | number, webhookMessageAuthor?: DiscordWebhookMessageAuthor, webhookMessageContent?: string)
+#### requestClientScreenshotUploadToDiscord(player, webhookMessageDto)
 Tira uma captura de tela do cliente especificado e a envia para o webhook do discord configurado. 
 
 Argumentos:
-* **player**: O índice do player alvo.
-* **webhookMessageAuthor**: Um objeto opcional contendo as informações do autor da mensagem do webhook.
-    * **name**: string? - Um nome opcional para o autor.
-    * **avatarUrl**: string? - Uma url opcional para o avatar do autor.
-* **webhookMessageContent**: Um texto opcional para o contéudo da mensagem do webhook.
+* **player**: string | number
+* **webhookMessageDto**: [WebhookMessageDto](https://birdie0.github.io/discord-webhooks-guide/discord_webhook.html)
 
 Exemplo:
 ```lua
-exports['discord-screenshot']:requestClientScreenshotDiscordUpload(GetPlayers()[1], {
-    name = 'Screenshot',
-    avatarUrl = 'https://canary.discord.com/assets/f78426a064bc9dd24847519259bc42af.png'
-}, 'This is an example.')
+exports['discord-screenshot']:requestClientScreenshotUploadToDiscord(GetPlayers()[1], {
+    username = 'A cat',
+    avatar_url = 'https://cdn2.thecatapi.com/images/IboDUkK8K.jpg',
+    content = 'Meow!',
+    embeds = {
+        {
+            color = 16771584,
+            author = {
+                name = 'Wow!',
+                icon_url = 'https://cdn.discordapp.com/embed/avatars/0.png'
+            },
+            title = 'I can send anything.'
+        }
+    }
+})
 ```
 
-#### requestCustomClientScreenshotDiscordUpload(player: string | number, webhookUrl: string, webhookMessageAuthor?: DiscordWebhookMessageAuthor, webhookMessageContent?: string)
+#### requestCustomClientScreenshotUploadToDiscord(player, webhookUrl, webhookMessageDto)
 Tira uma captura de tela do cliente especificado e a envia para o webhook do discord passado.
 
 Argumentos:
-* **player**: O índice do player alvo.
-* **webhookUrl**: A url do webhook do discord.
-* **webhookMessageAuthor**: Um objeto opcional contendo as informações do autor da mensagem do webhook.
-    * **name**: string? - Um nome opcional para o autor.
-    * **avatarUrl**: string? - Uma url opcional para o avatar do autor.
-* **webhookMessageContent**: Um texto opcional para o contéudo da mensagem do webhook.
+* **player**: string | number
+* **webhookUrl**: string
+* **options**: object
+  * **encoding**: 'png' | 'jpg' | 'webp'
+  * **quality**: number
+* **webhookMessageDto**: [WebhookMessageDto](https://birdie0.github.io/discord-webhooks-guide/discord_webhook.html)
 
 Exemplo:
 ```lua
-exports['discord-screenshot']:requestCustomClientScreenshotDiscordUpload(GetPlayers()[1], 'https://canary.discord.com/api/webhooks/412884227131886566/qFcXr19SozY5Bej5H74RdbRscsOjH4eVxgJO5Iwh5iawmkpRfjzijezlwdu15wNsCk4w', {
-    name = 'Screenshot',
-    avatarUrl = 'https://canary.discord.com/assets/f78426a064bc9dd24847519259bc42af.png'
-}, 'This is an example.')
+local screenshotOptions = {
+    encoding = 'png',
+    quality = 1
+}
+
+exports['discord-screenshot']:requestCustomClientScreenshotUploadToDiscord(GetPlayers()[1], 'https://ptb.discord.com/api/webhooks/767824413780607097/WLjd77Y0CUvqXmhLCYzqkiZ-BrTpcGfNiZ7hXcJRgQxrU0YR8sy566MgMHgqRx8IZ9iu', screenshotOptions, {
+    username = 'A cat',
+    avatar_url = 'https://cdn2.thecatapi.com/images/IboDUkK8K.jpg',
+    content = 'Meow!',
+    embeds = {
+        {
+            color = 16771584,
+            author = {
+                name = 'Wow!',
+                icon_url = 'https://cdn.discordapp.com/embed/avatars/0.png'
+            },
+            title = 'I can send anything.'
+        }
+    }
+})
 ```
 
 ## Dependências
