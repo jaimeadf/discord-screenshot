@@ -4,9 +4,9 @@ import ScreenshotOptions from './ScreenshotOptions';
 import File from '../utils/File';
 
 class ScreenshotTaker {
-    private readonly _options: ScreenshotOptions;
+    private readonly _options?: ScreenshotOptions;
 
-    public constructor(options: ScreenshotOptions) {
+    public constructor(options?: ScreenshotOptions) {
         this._options = options;
     }
 
@@ -16,10 +16,11 @@ class ScreenshotTaker {
                 if (error) {
                     reject(error);
                 } else {
+                    const mimeType = new MIMEType(urlString.substring(6, urlString.indexOf(';')));
                     resolve({
-                        fileName: `screenshot.${this._options.encoding}`,
+                        fileName: `screenshot.${mimeType.subtype}`,
                         content: Buffer.from(urlString.substring(urlString.indexOf(',') + 1), 'base64'),
-                        mimeType: new MIMEType(`image/${this._options.encoding}`)
+                        mimeType: mimeType
                     });
                 }
             });
