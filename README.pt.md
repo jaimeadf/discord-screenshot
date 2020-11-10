@@ -7,8 +7,8 @@
 </p>
 
 <p>
-    <a href="https://discord.gg/xvqfCgg">
-        <img src="https://discordapp.com/api/guilds/753071308010684417/widget.png?style=banner2" alt="Chat">
+    <a href="https://discord.gg/z6Yx9A8VDR">
+        <img src="https://discordapp.com/api/guilds/514185816315265068/widget.png?style=banner2" alt="Chat">
     </a>
 </p>
 
