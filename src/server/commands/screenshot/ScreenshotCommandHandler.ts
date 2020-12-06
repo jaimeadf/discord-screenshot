@@ -41,7 +41,7 @@ class ScreenshotCommandHandler implements CommandHandler {
                 }
 
                 if (targetPlayer) {
-                    await this.requestClientScreenshotUploadToDiscord(player);
+                    await this.requestClientScreenshotUploadToDiscord(targetPlayer);
                 }
             }
         }
