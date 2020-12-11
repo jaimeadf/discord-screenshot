@@ -1,18 +1,17 @@
-import CommandHandler from './CommandHandler';
+abstract class Command {
+    private readonly _name: string;
 
-class Command {
-    private handler?: CommandHandler;
-
-    constructor(name: string, handler?: CommandHandler) {
-        this.handler = handler;
-
-        RegisterCommand(name, (player: number, args: string[], rawCommand: string) =>
-            this.handler?.execute(player.toString(), args, rawCommand), false);
+    protected constructor(name: string) {
+        this._name = name;
     }
 
-    public setHandler(handler: CommandHandler) {
-        this.handler = handler;
+    register() {
+        RegisterCommand(this._name, (source: number, args: string[], rawCommand: string) => {
+            this.execute(source.toString(), args, rawCommand);
+        }, false);
     }
+
+    protected abstract execute(source: string, args: string[], rawCommand: string): void;
 }
 
 export default Command;

@@ -12,114 +12,131 @@
     </a>
 </p>
 
-## Visão geral
 
-`discord-screenshot` é um resource para [FiveM](https://fivem.net) e [RedM](https://redm.gg) que tira uma captura de tela de um player e a upa para um webhook do discord.
+`discord-screenshot` é um resource para [FiveM](https://fivem.net) que captura a tela de um player e a upa para o webhook do discord.
 
 [![Showcase](https://img.youtube.com/vi/c9h40LoLky8/maxresdefault.jpg)](https://youtu.be/c9h40LoLky8)
 
-## Instalação
+## Setup
+1. Certifique-se que seus artefatos ([windows](https://runtime.fivem.net/artifacts/fivem/build_server_windows/master) ou [linux](https://runtime.fivem.net/artifacts/fivem/build_proot_linux/master)) estão atualizados.
+2. Extraia o último arquivo zip em [releases](https://github.com/jaimeadf/discord-screenshot/releases) na sua pasta resources.
+3. Adicione `ensure screenshot-basic` e `ensure discord-screenshot` no seu `server.cfg`.
+4. Ajuste a [configuração](#configuração) do resource no `settings.json`.
 
-1. Certifique-se que seus artefatos ([windows](https://runtime.fivem.net/artifacts/fivem/build_server_windows/master) ou [linux](https://runtime.fivem.net/artifacts/fivem/build_proot_linux/master)) estejam atualizados.
-2. Baixe o último arquivo zip em [releases](https://github.com/jaimeadf/discord-screenshot/releases) e extraia na sua pasta resources.
-3. Adicione `ensure screenshot-basic` e `ensure discord-screenshot` no seu server.cfg.
-4. Configure o resource no arquivo `settings.json` dentro da pasta discord-screenshot.
+## Configuração
+
+* **webhookUrl**: A url do seu webhook do discord.
+* **framework**: A framework que você está usando (`vrp` ou `none`).
+* **commandName**: O nome do comando.
+* **commandPermission**: A permissão para usar o comando.
+* **screenshotOptions**
+  * **encoding**: O formato do arquivo (`png`, `jpg` ou `webp`)
+  * **quality**: A qualidade da imagem de 0 a 1.
 
 ## Uso
 
-Um comando `/screenshot <alvo>` é criado de acordo com a framework que você está utilizando. Se você passar `-1` como alvo, uma captura da tela de todos no servidor será tirada.
-
-**Ele só funciona fora de `localhost`!**
+> **Nota:** Se você passar `-1` como alvo, a tela de todos os jogadores será capturada.
 
 ### Standalone
 
-#### /screenshot &lt;player ou identificador&gt;
-Pode ser usado via console ou por qualquer um com a permissão ace `command.screenshot`.
+#### /screenshot &lt;player ou identifier&gt;
 
-### ESX
-
-#### /screenshot &lt;player&gt;
-Pode ser usado via console ou por qualquer admin.
+Pode ser usado pelo console ou por qualquer um com a permissão ace `discord.screenshot`.
 
 ### vRP
 
 #### /screenshot &lt;user_id&gt;
-Pode ser usado via console ou por qualquer um com a permissão `command.screenshot`.
 
-## API
+Pode ser usado pelo console ou por qualquer um com a permissão `discord.screenshot`.
+
+## Exports
 
 ### Servidor
 
-#### requestClientScreenshotUploadToDiscord(player, webhookMessageDto)
-Tira uma captura de tela do cliente especificado e a envia para o webhook do discord configurado. 
+#### requestClientScreenshotUploadToDiscord
 
-Argumentos:
+Captura a tela do player e a envia para o webhook do discord configurado.
+
+Parâmetros:
 * **player**: string | number
-* **webhookMessageDto**: [WebhookMessageDto](https://birdie0.github.io/discord-webhooks-guide/discord_webhook.html)
+* **webhookMessageData?**: [WebhookMessageData](https://birdie0.github.io/discord-webhooks-guide/discord_webhook.html)
+* **callback?**: (error?: string) => void
 
 Exemplo:
 ```lua
-exports['discord-screenshot']:requestClientScreenshotUploadToDiscord(GetPlayers()[1], {
-    username = 'A cat',
-    avatar_url = 'https://cdn2.thecatapi.com/images/IboDUkK8K.jpg',
-    content = 'Meow!',
-    embeds = {
-        {
-            color = 16771584,
-            author = {
-                name = 'Wow!',
-                icon_url = 'https://cdn.discordapp.com/embed/avatars/0.png'
-            },
-            title = 'I can send anything.'
+exports["discord-screenshot"]:requestClientScreenshotUploadToDiscord(
+    GetPlayers()[1],
+    {
+        username = "A cat",
+        avatar_url = "https://cdn2.thecatapi.com/images/IboDUkK8K.jpg",
+        content = "Meow!",
+        embeds = {
+            {
+                color = 16771584,
+                author = {
+                    name = "Wow!",
+                    icon_url = "https://cdn.discordapp.com/embed/avatars/0.png"
+                },
+                title = "I can send anything."
+            }
         }
-    }
-})
+    },
+    function(error)
+        if error then
+            return print("^7" .. error)
+        end
+        print("Sent screenshot successfully")
+    end
+)
+
 ```
 
-#### requestCustomClientScreenshotUploadToDiscord(player, webhookUrl, webhookMessageDto)
-Tira uma captura de tela do cliente especificado e a envia para o webhook do discord passado.
+#### requestCustomClientScreenshotUploadToDiscord
 
-Argumentos:
+Captura a tela do player e a envia para o webhook do discord especificado.
+
+Parâmetros:
 * **player**: string | number
 * **webhookUrl**: string
-* **options**: object
+* **options?**: object
   * **encoding**: 'png' | 'jpg' | 'webp'
   * **quality**: number
-* **webhookMessageDto**: [WebhookMessageDto](https://birdie0.github.io/discord-webhooks-guide/discord_webhook.html)
+* **webhookMessageData?**: [WebhookMessageData](https://birdie0.github.io/discord-webhooks-guide/discord_webhook.html)
+* **callback?**: (error?: string) => void
 
 Exemplo:
 ```lua
-local screenshotOptions = {
-    encoding = 'png',
-    quality = 1
-}
-
-exports['discord-screenshot']:requestCustomClientScreenshotUploadToDiscord(GetPlayers()[1], 'https://ptb.discord.com/api/webhooks/767824413780607097/WLjd77Y0CUvqXmhLCYzqkiZ-BrTpcGfNiZ7hXcJRgQxrU0YR8sy566MgMHgqRx8IZ9iu', screenshotOptions, {
-    username = 'A cat',
-    avatar_url = 'https://cdn2.thecatapi.com/images/IboDUkK8K.jpg',
-    content = 'Meow!',
-    embeds = {
-        {
-            color = 16771584,
-            author = {
-                name = 'Wow!',
-                icon_url = 'https://cdn.discordapp.com/embed/avatars/0.png'
-            },
-            title = 'I can send anything.'
+exports["discord-screenshot"]:requestCustomClientScreenshotUploadToDiscord(
+    GetPlayers()[1],
+    "https://ptb.discord.com/api/webhooks/767824413780607097/WLjd77Y0CUvqXmhLCYzqkiZ-BrTpcGfNiZ7hXcJRgQxrU0YR8sy566MgMHgqRx8IZ9iu",
+    {
+        encoding = "png",
+        quality = 1
+    },
+    {
+        username = "A cat",
+        avatar_url = "https://cdn2.thecatapi.com/images/IboDUkK8K.jpg",
+        content = "Meow!",
+        embeds = {
+            {
+                color = 16771584,
+                author = {
+                    name = "Wow!",
+                    icon_url = "https://cdn.discordapp.com/embed/avatars/0.png"
+                },
+                title = "I can send anything."
+            }
         }
-    }
-})
+    },
+    function(error)
+        if error then
+            return print("^7" .. error)
+        end
+        print("Sent screenshot successfully")
+    end
+)
 ```
 
 ## Dependências
 
 * [screenshot-basic](https://github.com/citizenfx/screenshot-basic)
-
-## Issues
-
-Reporte qualquer problema que tiver e tente fornecer todas as informações sobre ele.
-
-
-## Contribuindo
-
-Sinta-se livre para contribuir e melhorar o código e o repositório.

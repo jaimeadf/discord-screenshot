@@ -1,31 +1,26 @@
 const path = require('path');
 const CopyPlugin = require('copy-webpack-plugin');
 
-const baseConfig = {
-    target: 'node',
+module.exports = {
     mode: 'production',
-    module: {
-        rules: [
-            {
-                test: /\.ts$/,
-                loader: 'babel-loader'
-            }
-        ]
-    },
-    resolve: {
-        extensions: [ '.ts', '.js' ]
-    }
-};
-
-const serverConfig = {
     entry: './src/server/index.ts',
     output: {
         filename: 'server.js',
         path: path.resolve(__dirname, './dist')
     },
-    optimization: {
-        minimize: true
+    module: {
+        rules: [
+            {
+                test: /\.ts$/,
+                exclude: /node_modules/,
+                loader: 'ts-loader'
+            }
+        ]
     },
+    resolve: {
+        extensions: [ '.ts', '.js' ]
+    },
+    target: 'node',
     plugins: [
         new CopyPlugin({
             patterns: [
@@ -37,7 +32,4 @@ const serverConfig = {
             ]
         })
     ],
-    ...baseConfig
 };
-
-module.exports = [ serverConfig ];
