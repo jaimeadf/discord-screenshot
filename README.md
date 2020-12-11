@@ -36,7 +36,7 @@
 
 ## Usage
 
-> **Nota:** If you pass `-1` as target, the screen of all the players will be captured.
+> **Note:** If you pass `-1` as target, the screen of all the players will be captured.
 
 ### Standalone
 
