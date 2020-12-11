@@ -1,4 +1,4 @@
-type ScreenshotEncoding = 'png' | 'jpg' | 'webp';
+import ScreenshotEncoding from './ScreenshotEncoding';
 
 interface ScreenshotOptions {
     encoding?: ScreenshotEncoding;
@@ -6,7 +6,3 @@ interface ScreenshotOptions {
 }
 
 export default ScreenshotOptions;
-
-export {
-    ScreenshotEncoding
-};

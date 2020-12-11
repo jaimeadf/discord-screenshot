@@ -1,70 +1,60 @@
-import Settings from './data/Settings';
+import { loadSettings } from './Settings';
 
-import DiscordWebhook from './discord/DiscordWebhook';
-import DiscordWebhookMessage from './discord/DiscordWebhookMessage';
-import DiscordWebhookMessageDto from './dtos/discord/DiscordWebhookMessageDto';
+import WebhookClient from './discord/WebhookClient';
+import WebhookMessage, { WebhookMessageData } from './discord/WebhookMessage';
 
-import ScreenshotTaker from './screenshot/ScreenshotTaker';
+import Screenshoter from './screenshot/Screenshoter';
 import ScreenshotOptions from './screenshot/ScreenshotOptions';
 
-import Command from './commands/Command';
-import ScreenshotCommandHandler from './commands/screenshot/ScreenshotCommandHandler';
-import VrpScreenshotCommandHandler from './commands/screenshot/VrpScreenshotCommandHandler';
-import EsxScreenshotCommandHandler from './commands/screenshot/EsxScreenshotCommandHandler';
+import StandaloneCommandFactory from './commands/StandaloneCommandFactory';
+import VrpCommandFactory from './commands/VrpCommandFactory';
 
-import ResourceState from './utils/ResourceState';
+const settings = loadSettings();
 
-const settings = JSON.parse(LoadResourceFile(GetCurrentResourceName(), 'settings.json')) as Settings;
+const webhookClient = new WebhookClient(settings.webhookUrl);
+const screenshoter = new Screenshoter();
 
-const screenshotTaker = new ScreenshotTaker(settings.screenshotOptions);
-const discordWebhook = new DiscordWebhook(settings.discordWebhookUrl);
+const commandFactory = createCommandFactory(settings.framework);
 
-const screenshotCommand = new Command('screenshot', new ScreenshotCommandHandler(screenshotTaker, discordWebhook));
+const screenshotCommand = commandFactory.createScreenshotCommand(settings.commandName, settings.commandPermission, webhookClient, screenshoter);
+screenshotCommand.register();
 
-global.exports('requestClientScreenshotUploadToDiscord', (player: string | number, webhookMessageDto: DiscordWebhookMessageDto): void => {
-    screenshotTaker.takeClientScreenshot(player.toString()).then(screenshot => {
-        const message = new DiscordWebhookMessage(webhookMessageDto)
-            .attachFile(screenshot);
+global.exports(
+    'requestClientScreenshotUploadToDiscord',
+    async (player: string | number, messageData?: WebhookMessageData, callback?: () => void) => {
+        const message = new WebhookMessage(messageData);
+        message.attachFile(await screenshoter.takeScreenshot(player));
 
-        discordWebhook.sendMessage(message);
-    });
-});
+        webhookClient.send(message)
+            .then(callback);
+    }
+);
 
-global.exports('requestCustomClientScreenshotUploadToDiscord', (player: string | number, webhookUrl: string, screenshotOptions: ScreenshotOptions = settings.screenshotOptions, webhookMessageDto?: DiscordWebhookMessageDto): void => {
-    const customDiscordWebhook = new DiscordWebhook(webhookUrl);
-    const customScreenshotTaker = new ScreenshotTaker(screenshotOptions);
+global.exports(
+    'requestCustomClientScreenshotUploadToDiscord',
+    async (
+        player: string | number,
+        webhookUrl: string,
+        options?: ScreenshotOptions,
+        messageData?: WebhookMessageData,
+        callback?: () => void
+    ) => {
+        const customWebhookClient = new WebhookClient(webhookUrl);
+        const customScreenshoter = new Screenshoter(options);
 
-    customScreenshotTaker.takeClientScreenshot(player.toString())
-        .then(screenshot => {
-            const message = new DiscordWebhookMessage(webhookMessageDto)
-                .attachFile(screenshot);
+        const message = new WebhookMessage(messageData);
+        message.attachFile(await customScreenshoter.takeScreenshot(player));
 
-            customDiscordWebhook.sendMessage(message);
-        });
-});
+        customWebhookClient.send(message)
+            .then(callback);
+    }
+);
 
-function onFindNewResource(resourceName: string) {
-    if (GetResourceState(resourceName) === ResourceState.STARTED) {
-        switch (resourceName) {
-            case 'vrp':
-                screenshotCommand.setHandler(new VrpScreenshotCommandHandler(screenshotTaker, discordWebhook));
-                break;
-            case 'es_extended':
-                screenshotCommand.setHandler(new EsxScreenshotCommandHandler(screenshotTaker, discordWebhook))
-                break;
-        }
+function createCommandFactory(framework: string) {
+    switch (framework) {
+        case 'vrp':
+            return new VrpCommandFactory();
+        default:
+            return new StandaloneCommandFactory();
     }
 }
-
-on('onResourceStart', (resourceName: string) => {
-    if (resourceName === GetCurrentResourceName()) {
-        for (let i = 0; i < GetNumResources(); i++) {
-            const foundResourceName = GetResourceByFindIndex(i);
-            if (foundResourceName) {
-                onFindNewResource(foundResourceName);
-            }
-        }
-    } else {
-        onFindNewResource(resourceName);
-    }
-});

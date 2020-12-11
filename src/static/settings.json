@@ -1,7 +1,10 @@
 {
-  "discordWebhookUrl": "your_webhook_here",
-  "screenshotOptions": {
-    "encoding": "jpg",
-    "quality": 0.92
-  }
+    "webhookUrl": "your_webhook_here",
+    "framework": "none",
+    "commandName": "screenshot",
+    "commandPermission": "command.screenshot",
+    "screenshotOptions": {
+        "encoding": "jpg",
+        "quality": 0.92
+    }
 }

@@ -1,9 +1,11 @@
-import MIMEType from 'whatwg-mimetype';
-
-interface File {
-    fileName: string;
+class File {
+    name: string;
     content: Buffer;
-    mimeType: MIMEType;
+
+    constructor(name: string, content: Buffer) {
+        this.name = name;
+        this.content = content;
+    }
 }
 
 export default File;
