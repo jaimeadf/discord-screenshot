@@ -19,8 +19,8 @@
 [![Showcase](https://img.youtube.com/vi/c9h40LoLky8/maxresdefault.jpg)](https://youtu.be/c9h40LoLky8)
 
 ## Setup
-1. Make sure your artifacts ([windows](https://runtime.fivem.net/artifacts/fivem/build_server_windows/master) ou [linux](https://runtime.fivem.net/artifacts/fivem/build_proot_linux/master)) are up to date.
-2.Extract the latest zip file at [releases](https://github.com/jaimeadf/discord-screenshot/releases) in your resources folder.
+1. Make sure your artifacts ([windows](https://runtime.fivem.net/artifacts/fivem/build_server_windows/master) or [linux](https://runtime.fivem.net/artifacts/fivem/build_proot_linux/master)) are up to date.
+2. Extract the latest zip file at [releases](https://github.com/jaimeadf/discord-screenshot/releases) in your resources folder.
 3. Add `ensure screenshot-basic` and `ensure discord-screenshot` in your `server.cfg`.
 4. Adjust the [configuration](#configuration) of the resource in the `settings.json`.
 
