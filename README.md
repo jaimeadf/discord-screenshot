@@ -1,24 +1,21 @@
 # discord-screenshot
 
-<p>
-    <a href="https://github.com/GHMatti/ghmattimysql/blob/master/license.md">
-        <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License">
-    </a>
+<p align="center">
+  <a href="https://github.com/GHMatti/ghmattimysql/blob/master/license.md">
+    <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License">
+  </a>
+  <a href="https://discord.gg/z6Yx9A8VDR">
+    <img src="https://discordapp.com/api/guilds/514185816315265068/widget.png" alt="Chat">
+  </a>
 </p>
 
-<p>
-    <a href="https://discord.gg/z6Yx9A8VDR">
-        <img src="https://discordapp.com/api/guilds/514185816315265068/widget.png?style=banner2" alt="Chat">
-    </a>
-</p>
+> You can also read this in [Portuguese](https://github.com/jaimeadf/discord-screenshot/blob/master/README.pt.md).
 
-> You can also read this README in [Portuguese](https://github.com/jaimeadf/discord-screenshot/blob/master/README.pt.md).
+`discord-screenshot` is a resource for [FiveM](https://fivem.net) that capture the screen of a player and upload it to a discord's webhook.
 
-`discord-screenshot` is a resource for [FiveM](https://fivem.net) that captures a screenshot of a player and upload it to a discord's webhook.
+[![Showcase](https://yt-embed.herokuapp.com/embed?v=c9h40LoLky8)](https://youtu.be/c9h40LoLky8)
 
-[![Showcase](https://img.youtube.com/vi/c9h40LoLky8/maxresdefault.jpg)](https://youtu.be/c9h40LoLky8)
-
-## Setup
+## Installation
 1. Make sure your artifacts ([windows](https://runtime.fivem.net/artifacts/fivem/build_server_windows/master) or [linux](https://runtime.fivem.net/artifacts/fivem/build_proot_linux/master)) are up to date.
 2. Extract the latest zip file at [releases](https://github.com/jaimeadf/discord-screenshot/releases) in your resources folder.
 3. Add `ensure screenshot-basic` and `ensure discord-screenshot` in your `server.cfg`.
@@ -26,15 +23,15 @@
 
 ## Configuration
 
-* **webhookUrl**: The url of your discord's webhook.
-* **framework**: The framework you are using (`vrp` or `none`).
-* **commandName**: The command name.
-* **commandPermission**: The permission to use the command.
+* **webhookUrl** - The url of your discord's webhook.
+* **framework** - The framework you are using (`vrp` or `none`).
+* **commandName** - The command name.
+* **commandPermission** - The permission to use the command.
 * **screenshotOptions**
-  * **encoding**: The file format (`png`, `jpg` or `webp`)
-  * **quality**: The image quality from 0 to 1.
+  * **encoding** - The file format (`png`, `jpg` or `webp`)
+  * **quality** - The image quality from 0.0 to 1.0.
 
-## Usage
+## Default usage
 
 > **Note:** If you pass `-1` as target, the screen of all the players will be captured.
 
@@ -42,13 +39,13 @@
 
 #### /screenshot &lt;player ou identifier&gt;
 
-Can be used via console or by anyone with the ace permission `discord.screenshot`.
+Can be used via the server console or by anyone with the ace permission `command.screenshot`.
 
 ### vRP
 
 #### /screenshot &lt;user_id&gt;
 
-Can be used via console or by anyone with the permission `discord.screenshot`.
+Can be used via the server console or by anyone with the permission `command.screenshot`.
 
 ## Exports
 
@@ -84,7 +81,7 @@ exports["discord-screenshot"]:requestClientScreenshotUploadToDiscord(
     },
     function(error)
         if error then
-            return print("^7" .. error)
+            return print(error)
         end
         print("Sent screenshot successfully")
     end
