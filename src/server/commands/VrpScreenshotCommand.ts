@@ -10,7 +10,13 @@ import File from '../utils/File';
 class VrpScreenshotCommand extends ScreenshotCommand {
     private _vrp: VrpProxy.Handlers;
 
-    constructor(name: string, permission: string, webhookClient: WebhookClient, screenshoter: Screenshoter, vrp: VrpProxy.Handlers) {
+    constructor(
+        name: string,
+        permission: string,
+        webhookClient: WebhookClient,
+        screenshoter: Screenshoter,
+        vrp: VrpProxy.Handlers
+    ) {
         super(name, permission, webhookClient, screenshoter);
         this._vrp = vrp;
     }
@@ -20,7 +26,7 @@ class VrpScreenshotCommand extends ScreenshotCommand {
             const userId = this._vrp.getUserId(source) as number | undefined;
             if (userId && !this._vrp.hasPermission(userId, this.permission)) {
                 return emitNet('chat:addMessage', source, {
-                    args: ['^7discord-screenshot', '^1You don\'t have permission to use this command.']
+                    args: ['^7discord-screenshot', "^1You don't have permission to use this command."],
                 });
             }
         }
@@ -35,7 +41,7 @@ class VrpScreenshotCommand extends ScreenshotCommand {
                     await this.requestScreenshotUploadToDiscord(source, target.toString());
                 } else {
                     emitNet('chat:addMessage', source, {
-                        args: ['^7discord-screenshot', '^1The target isn\'t online.']
+                        args: ['^7discord-screenshot', "^1The target isn't online."],
                     });
                 }
             }

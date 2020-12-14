@@ -6,9 +6,13 @@ abstract class Command {
     }
 
     register() {
-        RegisterCommand(this._name, (source: number, args: string[], rawCommand: string) => {
-            this.execute(source.toString(), args, rawCommand);
-        }, false);
+        RegisterCommand(
+            this._name,
+            (source: number, args: string[], rawCommand: string) => {
+                this.execute(source.toString(), args, rawCommand);
+            },
+            false
+        );
     }
 
     protected abstract execute(source: string, args: string[], rawCommand: string): void;

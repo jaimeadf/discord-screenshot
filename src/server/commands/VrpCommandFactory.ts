@@ -15,7 +15,12 @@ class VrpCommandFactory implements CommandFactory {
         this._vrp = VrpProxy.getInterface('vRP');
     }
 
-    public createScreenshotCommand(name: string, permission: string, webhookClient: WebhookClient, screenshoter: Screenshoter): Command {
+    public createScreenshotCommand(
+        name: string,
+        permission: string,
+        webhookClient: WebhookClient,
+        screenshoter: Screenshoter
+    ): Command {
         return new VrpScreenshotCommand(name, permission, webhookClient, screenshoter, this._vrp);
     }
 }

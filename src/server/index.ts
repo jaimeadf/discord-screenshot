@@ -9,6 +9,8 @@ import ScreenshotOptions from './screenshot/ScreenshotOptions';
 import StandaloneCommandFactory from './commands/StandaloneCommandFactory';
 import VrpCommandFactory from './commands/VrpCommandFactory';
 
+import Utils from './utils/Utils';
+
 const settings = loadSettings();
 
 const webhookClient = new WebhookClient(settings.webhookUrl);
@@ -16,39 +18,58 @@ const screenshoter = new Screenshoter();
 
 const commandFactory = createCommandFactory(settings.framework);
 
-const screenshotCommand = commandFactory.createScreenshotCommand(settings.commandName, settings.commandPermission, webhookClient, screenshoter);
+const screenshotCommand = commandFactory.createScreenshotCommand(
+    settings.commandName,
+    settings.commandPermission,
+    webhookClient,
+    screenshoter
+);
 screenshotCommand.register();
 
 global.exports(
     'requestClientScreenshotUploadToDiscord',
-    async (player: string | number, messageData?: WebhookMessageData, callback?: (error: string | void) => void) => {
-        const message = new WebhookMessage(messageData);
-        message.attachFile(await screenshoter.takeScreenshot(player));
+    (player: string | number, messageData?: WebhookMessageData, callback?: (error?: string) => void) => {
+        screenshoter
+            .takeScreenshot(player)
+            .then(async screenshot => {
+                const message = new WebhookMessage(messageData);
+                message.attachFile(screenshot);
 
-        webhookClient.send(message)
-            .then(callback)
-            .catch(error => callback?.call(undefined, error.message));
+                await webhookClient.send(message);
+
+                Utils.safeInvoke(callback);
+            })
+            .catch(error => {
+                Utils.safeInvoke(callback, error.message);
+            });
     }
 );
 
 global.exports(
     'requestCustomClientScreenshotUploadToDiscord',
-    async (
+    (
         player: string | number,
         webhookUrl: string,
         options?: ScreenshotOptions,
         messageData?: WebhookMessageData,
-        callback?: (error: string | void) => void
+        callback?: (error?: string) => void
     ) => {
         const customWebhookClient = new WebhookClient(webhookUrl);
         const customScreenshoter = new Screenshoter(options);
 
-        const message = new WebhookMessage(messageData);
-        message.attachFile(await customScreenshoter.takeScreenshot(player));
+        customScreenshoter
+            .takeScreenshot(player)
+            .then(async screenshot => {
+                const message = new WebhookMessage(messageData);
+                message.attachFile(screenshot);
 
-        customWebhookClient.send(message)
-            .then(callback)
-            .catch(error => callback?.call(undefined, error.message));
+                await customWebhookClient.send(message);
+
+                Utils.safeInvoke(callback);
+            })
+            .catch(error => {
+                Utils.safeInvoke(callback, error.message);
+            });
     }
 );
 

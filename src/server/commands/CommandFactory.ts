@@ -4,7 +4,12 @@ import Screenshoter from '../screenshot/Screenshoter';
 import Command from './Command';
 
 interface CommandFactory {
-    createScreenshotCommand(name: string, permission: string, webhookClient: WebhookClient, screenshoter: Screenshoter): Command;
+    createScreenshotCommand(
+        name: string,
+        permission: string,
+        webhookClient: WebhookClient,
+        screenshoter: Screenshoter
+    ): Command;
 }
 
 export default CommandFactory;

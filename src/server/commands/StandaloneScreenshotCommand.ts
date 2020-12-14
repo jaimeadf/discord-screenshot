@@ -6,7 +6,7 @@ class StandaloneScreenshotCommand extends ScreenshotCommand {
     protected async execute(source: string, args: string[], rawCommand: string) {
         if (source !== '0' && !IsPlayerAceAllowed(source, this.permission)) {
             return emitNet('chat:addMessage', source, {
-                args: ['^7discord-screenshot', '^1You don\'t have permission to use this command.']
+                args: ['^7discord-screenshot', "^1You don't have permission to use this command."],
             });
         }
 
@@ -20,7 +20,7 @@ class StandaloneScreenshotCommand extends ScreenshotCommand {
                 await this.requestScreenshotUploadToDiscord(source, target);
             } else {
                 emitNet('chat:addMessage', source, {
-                    args: ['^7discord-screenshot', '^1The target isn\'t online.']
+                    args: ['^7discord-screenshot', "^1The target isn't online."],
                 });
             }
         }

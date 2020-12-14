@@ -17,7 +17,7 @@ abstract class ScreenshotCommand extends Command {
     protected readonly webhookClient: WebhookClient;
     protected readonly screenshoter: Screenshoter;
 
-    constructor(name: string, permission: string, webhookClient: WebhookClient, screenshoter: Screenshoter){
+    constructor(name: string, permission: string, webhookClient: WebhookClient, screenshoter: Screenshoter) {
         super(name);
         this.permission = permission;
         this.webhookClient = webhookClient;
@@ -45,7 +45,11 @@ abstract class ScreenshotCommand extends Command {
 
     protected buildEmbed(requester: string, target: string, content: File | Error) {
         const embed = new Embed();
-        embed.setAuthor(GetPlayerName(target) ?? 'Unknown', 'https://github.com/jaimeadf', 'https://discord.com/assets/f78426a064bc9dd24847519259bc42af.png');
+        embed.setAuthor(
+            GetPlayerName(target) ?? 'Unknown',
+            'https://github.com/jaimeadf',
+            'https://discord.com/assets/f78426a064bc9dd24847519259bc42af.png'
+        );
         embed.setTimestamp();
         embed.setFooter(`Requested by ${requester !== '0' ? GetPlayerName(requester) ?? 'Unknown' : 'Server Console'}`);
 
