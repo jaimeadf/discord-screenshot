@@ -9,13 +9,17 @@
   </a>
 </p>
 
-`discord-screenshot` é um resource para [FiveM](https://fivem.net) que captura a tela de um player e a upa para o webhook do discord.
+`discord-screenshot` é um resource para [FiveM](https://fivem.net) que captura a tela de um player e a upa para o
+webhook do discord.
 
 [![Showcase](https://yt-embed.herokuapp.com/embed?v=c9h40LoLky8)](https://youtu.be/c9h40LoLky8)
 
 ## Instalação
-1. Certifique-se que seus artefatos ([windows](https://runtime.fivem.net/artifacts/fivem/build_server_windows/master) ou [linux](https://runtime.fivem.net/artifacts/fivem/build_proot_linux/master)) estão atualizados.
-2. Extraia o último arquivo zip em [releases](https://github.com/jaimeadf/discord-screenshot/releases) na sua pasta resources.
+
+1. Certifique-se que seus artefatos ([windows](https://runtime.fivem.net/artifacts/fivem/build_server_windows/master)
+   ou [linux](https://runtime.fivem.net/artifacts/fivem/build_proot_linux/master)) estão atualizados.
+2. Extraia o último arquivo zip em [releases](https://github.com/jaimeadf/discord-screenshot/releases) na sua pasta
+   resources.
 3. Adicione `ensure screenshot-basic` e `ensure discord-screenshot` no seu `server.cfg`.
 4. Ajuste a [configuração](#configuração) do resource no `settings.json`.
 
@@ -26,8 +30,8 @@
 * **commandName** - O nome do comando.
 * **commandPermission** - A permissão para usar o comando.
 * **screenshotOptions**
-  * **encoding** - O formato do arquivo (`png`, `jpg` ou `webp`)
-  * **quality** - A qualidade da imagem de 0.0 a 1.0.
+    * **encoding** - O formato do arquivo (`png`, `jpg` ou `webp`)
+    * **quality** - A qualidade da imagem de 0.0 a 1.0.
 
 ## Uso padrão
 
@@ -54,11 +58,13 @@ Pode ser usado pelo console do servidor ou por qualquer um com a permissão `com
 Captura a tela do player e a envia para o webhook do discord configurado.
 
 Parâmetros:
+
 * **player**: string | number
 * **webhookMessageData?**: [WebhookMessageData](https://birdie0.github.io/discord-webhooks-guide/discord_webhook.html)
 * **callback?**: (error?: string) => void
 
 Exemplo:
+
 ```lua
 exports["discord-screenshot"]:requestClientScreenshotUploadToDiscord(
     GetPlayers()[1],
@@ -84,7 +90,6 @@ exports["discord-screenshot"]:requestClientScreenshotUploadToDiscord(
         print("Sent screenshot successfully")
     end
 )
-
 ```
 
 #### requestCustomClientScreenshotUploadToDiscord
@@ -92,15 +97,17 @@ exports["discord-screenshot"]:requestClientScreenshotUploadToDiscord(
 Captura a tela do player e a envia para o webhook do discord especificado.
 
 Parâmetros:
+
 * **player**: string | number
 * **webhookUrl**: string
 * **options?**: object
-  * **encoding**: 'png' | 'jpg' | 'webp'
-  * **quality**: number
+    * **encoding**: 'png' | 'jpg' | 'webp'
+    * **quality**: number
 * **webhookMessageData?**: [WebhookMessageData](https://birdie0.github.io/discord-webhooks-guide/discord_webhook.html)
 * **callback?**: (error?: string) => void
 
 Exemplo:
+
 ```lua
 exports["discord-screenshot"]:requestCustomClientScreenshotUploadToDiscord(
     GetPlayers()[1],
@@ -126,7 +133,7 @@ exports["discord-screenshot"]:requestCustomClientScreenshotUploadToDiscord(
     },
     function(error)
         if error then
-            return print(error)
+            return print("^1ERROR: " .. error)
         end
         print("Sent screenshot successfully")
     end

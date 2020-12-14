@@ -11,13 +11,17 @@
 
 > You can also read this in [Portuguese](https://github.com/jaimeadf/discord-screenshot/blob/master/README.pt.md).
 
-`discord-screenshot` is a resource for [FiveM](https://fivem.net) that capture the screen of a player and upload it to a discord's webhook.
+`discord-screenshot` is a resource for [FiveM](https://fivem.net) that captures the screen of a player and uploads it to
+a discord's webhook.
 
 [![Showcase](https://yt-embed.herokuapp.com/embed?v=c9h40LoLky8)](https://youtu.be/c9h40LoLky8)
 
 ## Installation
-1. Make sure your artifacts ([windows](https://runtime.fivem.net/artifacts/fivem/build_server_windows/master) or [linux](https://runtime.fivem.net/artifacts/fivem/build_proot_linux/master)) are up to date.
-2. Extract the latest zip file at [releases](https://github.com/jaimeadf/discord-screenshot/releases) in your resources folder.
+
+1. Make sure your artifacts ([windows](https://runtime.fivem.net/artifacts/fivem/build_server_windows/master)
+   or [linux](https://runtime.fivem.net/artifacts/fivem/build_proot_linux/master)) are up to date.
+2. Extract the latest zip file at [releases](https://github.com/jaimeadf/discord-screenshot/releases) in your resources
+   folder.
 3. Add `ensure screenshot-basic` and `ensure discord-screenshot` in your `server.cfg`.
 4. Adjust the [configuration](#configuration) of the resource in the `settings.json`.
 
@@ -28,8 +32,8 @@
 * **commandName** - The command name.
 * **commandPermission** - The permission to use the command.
 * **screenshotOptions**
-  * **encoding** - The file format (`png`, `jpg` or `webp`)
-  * **quality** - The image quality from 0.0 to 1.0.
+    * **encoding** - The file format (`png`, `jpg` or `webp`)
+    * **quality** - The image quality from 0.0 to 1.0.
 
 ## Default usage
 
@@ -37,7 +41,7 @@
 
 ### Standalone
 
-#### /screenshot &lt;player ou identifier&gt;
+#### /screenshot &lt;player or identifier&gt;
 
 Can be used via the server console or by anyone with the ace permission `command.screenshot`.
 
@@ -53,14 +57,16 @@ Can be used via the server console or by anyone with the permission `command.scr
 
 #### requestClientScreenshotUploadToDiscord
 
-Capture the screen of the player and send it to the configured discord webhook.
+Captures the screen of the player and sends it to the configured discord's webhook.
 
 Parameters:
+
 * **player**: string | number
 * **webhookMessageData?**: [WebhookMessageData](https://birdie0.github.io/discord-webhooks-guide/discord_webhook.html)
 * **callback?**: (error?: string) => void
 
 Example:
+
 ```lua
 exports["discord-screenshot"]:requestClientScreenshotUploadToDiscord(
     GetPlayers()[1],
@@ -81,28 +87,29 @@ exports["discord-screenshot"]:requestClientScreenshotUploadToDiscord(
     },
     function(error)
         if error then
-            return print(error)
+            return print("^1ERROR: " .. error)
         end
         print("Sent screenshot successfully")
     end
 )
-
 ```
 
 #### requestCustomClientScreenshotUploadToDiscord
 
-Capture the screen of the player and send it to the specified discord webhook.
+Captures the screen of the player and sends it to the specified discord's webhook.
 
 Parameters:
+
 * **player**: string | number
 * **webhookUrl**: string
 * **options?**: object
-  * **encoding**: 'png' | 'jpg' | 'webp'
-  * **quality**: number
+    * **encoding**: 'png' | 'jpg' | 'webp'
+    * **quality**: number
 * **webhookMessageData?**: [WebhookMessageData](https://birdie0.github.io/discord-webhooks-guide/discord_webhook.html)
 * **callback?**: (error?: string) => void
 
 Example:
+
 ```lua
 exports["discord-screenshot"]:requestCustomClientScreenshotUploadToDiscord(
     GetPlayers()[1],
@@ -128,7 +135,7 @@ exports["discord-screenshot"]:requestCustomClientScreenshotUploadToDiscord(
     },
     function(error)
         if error then
-            return print("^7" .. error)
+            return print("^1ERROR: " .. error)
         end
         print("Sent screenshot successfully")
     end
