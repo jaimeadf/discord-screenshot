@@ -43,13 +43,13 @@ a discord's webhook.
 
 #### /screenshot &lt;player or identifier&gt;
 
-Can be used via the server console or by anyone with the ace permission `command.screenshot`.
+Can be used via the server console or by anyone with the ace permission `request.screenshot`.
 
 ### vRP
 
 #### /screenshot &lt;user_id&gt;
 
-Can be used via the server console or by anyone with the permission `command.screenshot`.
+Can be used via the server console or by anyone with the permission `request.screenshot`.
 
 ## Exports
 

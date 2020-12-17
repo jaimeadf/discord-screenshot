@@ -2,7 +2,7 @@
     "webhookUrl": "your_webhook_here",
     "framework": "none",
     "commandName": "screenshot",
-    "commandPermission": "command.screenshot",
+    "commandPermission": "request.screenshot",
     "screenshotOptions": {
         "encoding": "jpg",
         "quality": 0.92
