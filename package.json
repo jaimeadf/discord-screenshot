@@ -1,6 +1,6 @@
 {
     "name": "discord-screenshot",
-    "version": "1.3.2",
+    "version": "1.3.3",
     "description": "A resource for FiveM that captures the screen of a player and uploads it to a discord's webhook.",
     "main": "index.js",
     "scripts": {
