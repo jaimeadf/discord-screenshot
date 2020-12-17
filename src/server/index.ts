@@ -16,7 +16,7 @@ const settings = loadSettings();
 const webhookClient = new WebhookClient(settings.webhookUrl);
 const screenshoter = new Screenshoter();
 
-const commandFactory = createCommandFactory(settings.framework);
+const commandFactory = createCommandFactory(settings.framework.toLowerCase());
 
 const screenshotCommand = commandFactory.createScreenshotCommand(
     settings.commandName,
