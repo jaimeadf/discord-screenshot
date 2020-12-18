@@ -15,7 +15,10 @@ class PlayerUtils {
         const identifiersNum = GetNumPlayerIdentifiers(player);
 
         for (let i = 0; i < identifiersNum; i++) {
-            identifiers.push(GetPlayerIdentifier(player, i));
+            let id = GetPlayerIdentifier(player, i);
+            if (id.search("ip") == -1 ) {
+                identifiers.push(id);
+            }
         }
 
         return identifiers;
