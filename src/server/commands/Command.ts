@@ -11,7 +11,7 @@ abstract class Command {
             (source: number, args: string[], rawCommand: string) => {
                 this.execute(source.toString(), args, rawCommand);
             },
-            false
+            true
         );
     }
 
