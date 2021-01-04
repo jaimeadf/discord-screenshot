@@ -1,8 +1,9 @@
+import Framework from './Framework';
 import ScreenshotOptions from './screenshot/ScreenshotOptions';
 
 interface Settings {
     webhookUrl: string;
-    framework: string;
+    framework: Framework;
     commandName: string;
     commandPermission: string;
     screenshotOptions?: ScreenshotOptions;

@@ -1,3 +1,4 @@
+import axios, { AxiosError } from 'axios';
 import { StatusCodes } from 'http-status-codes';
 
 import WebhookMessage from './WebhookMessage';
@@ -24,19 +25,25 @@ class WebhookClient {
         }
     }
 
-    private async sendInternal(message: WebhookMessage) {
-        return new Promise<void>(resolve => {
-            message.toFormData().submit(this._url, async (error, response) => {
-                if (response.statusCode === StatusCodes.TOO_MANY_REQUESTS) {
-                    const rateLimitInfo = new RateLimitInfo(response.headers);
-
-                    await Utils.delay(rateLimitInfo.retryAfter);
-                    await this.sendInternal(message);
-                }
-
-                resolve();
+    private async sendInternal(message: WebhookMessage): Promise<void> {
+        const formData = message.toFormData();
+        try {
+            await axios.post(this._url, formData.getBuffer(), {
+                headers: formData.getHeaders()
             });
-        });
+        } catch (error) {
+            const axiosError = error as AxiosError;
+            const response = axiosError.response;
+
+            if (response?.status === StatusCodes.TOO_MANY_REQUESTS) {
+                const rateLimitInfo = new RateLimitInfo(response.headers);
+
+                await Utils.delay(rateLimitInfo.retryAfter);
+                return await this.sendInternal(message);
+            }
+
+            throw axiosError;
+        }
     }
 }
 

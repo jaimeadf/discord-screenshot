@@ -1,4 +1,5 @@
 import { loadSettings } from './Settings';
+import Framework from './Framework';
 
 import WebhookClient from './discord/WebhookClient';
 import WebhookMessage, { WebhookMessageData } from './discord/WebhookMessage';
@@ -16,7 +17,7 @@ const settings = loadSettings();
 const webhookClient = new WebhookClient(settings.webhookUrl);
 const screenshoter = new Screenshoter();
 
-const commandFactory = createCommandFactory(settings.framework.toLowerCase());
+const commandFactory = createCommandFactory(settings.framework);
 
 const screenshotCommand = commandFactory.createScreenshotCommand(
     settings.commandName,
@@ -73,9 +74,9 @@ global.exports(
     }
 );
 
-function createCommandFactory(framework: string) {
+function createCommandFactory(framework: Framework) {
     switch (framework) {
-        case 'vrp':
+        case Framework.VRP:
             return new VrpCommandFactory();
         default:
             return new StandaloneCommandFactory();
