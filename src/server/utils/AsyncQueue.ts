@@ -16,7 +16,7 @@ class AsyncQueue {
 
         this._deferrals.push({
             resolve,
-            promise,
+            promise
         });
 
         return this._deferrals[this._deferrals.length - 2]?.promise ?? Promise.resolve();

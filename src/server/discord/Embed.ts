@@ -77,7 +77,7 @@ class Embed {
     setFooter(text: string, iconUrl?: string) {
         this.footer = {
             text,
-            icon_url: iconUrl,
+            icon_url: iconUrl
         };
         return this;
     }
@@ -86,7 +86,7 @@ class Embed {
         this.image = {
             url: this.resolveMedia(image),
             width,
-            height,
+            height
         };
         return this;
     }
@@ -95,7 +95,7 @@ class Embed {
         this.thumbnail = {
             url: this.resolveMedia(thumbnail),
             width,
-            height,
+            height
         };
         return this;
     }
@@ -104,7 +104,7 @@ class Embed {
         this.video = {
             url: this.resolveMedia(video),
             width,
-            height,
+            height
         };
         return this;
     }
@@ -113,7 +113,7 @@ class Embed {
         this.author = {
             name,
             url,
-            icon_url: iconUrl,
+            icon_url: iconUrl
         };
         return this;
     }
@@ -122,7 +122,7 @@ class Embed {
         this.fields.push({
             name,
             value,
-            inline,
+            inline
         });
         return this;
     }
@@ -144,7 +144,7 @@ class Embed {
             thumbnail: this.thumbnail,
             video: this.video,
             author: this.author,
-            fields: this.fields.length > 0 ? this.fields : undefined,
+            fields: this.fields.length > 0 ? this.fields : undefined
         };
     }
 

@@ -1,6 +1,6 @@
 enum Framework {
-    NONE = "none",
-    VRP = "vrp"
+    NONE = 'none',
+    VRP = 'vrp'
 }
 
 export default Framework;

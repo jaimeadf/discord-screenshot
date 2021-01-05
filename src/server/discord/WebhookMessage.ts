@@ -64,7 +64,7 @@ class WebhookMessage {
             username: this.username,
             avatar_url: this.avatarUrl,
             tts: this.tts,
-            embeds: this.embeds.length > 0 ? this.embeds.map(embed => embed.toJSON()) : undefined,
+            embeds: this.embeds.length > 0 ? this.embeds.map(embed => embed.toJSON()) : undefined
         };
     }
 
@@ -78,7 +78,7 @@ class WebhookMessage {
 
         for (const file of files) {
             formData.append('file', file.content, {
-                filename: file.name,
+                filename: file.name
             });
         }
 
