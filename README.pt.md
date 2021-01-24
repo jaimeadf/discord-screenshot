@@ -61,6 +61,7 @@ Parâmetros:
 
 * **player**: string | number
 * **webhookMessageData?**: [WebhookMessageData](https://birdie0.github.io/discord-webhooks-guide/discord_webhook.html)
+* **timeoutMs?**: number
 * **callback?**: (error?: string) => void
 
 Exemplo:
@@ -83,9 +84,10 @@ exports["discord-screenshot"]:requestClientScreenshotUploadToDiscord(
             }
         }
     },
+    30000,
     function(error)
         if error then
-            return print("^7" .. error)
+            return print("^1ERROR: " .. error)
         end
         print("Sent screenshot successfully")
     end
@@ -104,6 +106,7 @@ Parâmetros:
     * **encoding**: 'png' | 'jpg' | 'webp'
     * **quality**: number
 * **webhookMessageData?**: [WebhookMessageData](https://birdie0.github.io/discord-webhooks-guide/discord_webhook.html)
+* **timeoutMs?**: number
 * **callback?**: (error?: string) => void
 
 Exemplo:
@@ -131,6 +134,7 @@ exports["discord-screenshot"]:requestCustomClientScreenshotUploadToDiscord(
             }
         }
     },
+    30000,
     function(error)
         if error then
             return print("^1ERROR: " .. error)

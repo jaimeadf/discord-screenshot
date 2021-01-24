@@ -29,9 +29,14 @@ screenshotCommand.register();
 
 global.exports(
     'requestClientScreenshotUploadToDiscord',
-    (player: string | number, messageData?: WebhookMessageData, callback?: (error?: string) => void) => {
+    (player: string | number, messageData?: WebhookMessageData, timeoutMs?: number, callback?: Callback) => {
+        if (typeof timeoutMs === 'function') {
+            callback = timeoutMs;
+            timeoutMs = undefined;
+        }
+
         screenshoter
-            .takeScreenshot(player)
+            .takeScreenshot(player, timeoutMs)
             .then(async screenshot => {
                 const message = new WebhookMessage(messageData);
                 message.attachFile(screenshot);
@@ -53,13 +58,19 @@ global.exports(
         webhookUrl: string,
         options?: ScreenshotOptions,
         messageData?: WebhookMessageData,
-        callback?: (error?: string) => void
+        timeoutMs?: number | Callback,
+        callback?: Callback
     ) => {
+        if (typeof timeoutMs === 'function') {
+            callback = timeoutMs;
+            timeoutMs = undefined;
+        }
+
         const customWebhookClient = new WebhookClient(webhookUrl);
         const customScreenshoter = new Screenshoter(options);
 
         customScreenshoter
-            .takeScreenshot(player)
+            .takeScreenshot(player, timeoutMs)
             .then(async screenshot => {
                 const message = new WebhookMessage(messageData);
                 message.attachFile(screenshot);
@@ -82,3 +93,5 @@ function createCommandFactory(framework: Framework) {
             return new StandaloneCommandFactory();
     }
 }
+
+type Callback = (error?: string) => void;

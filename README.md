@@ -63,6 +63,7 @@ Parameters:
 
 * **player**: string | number
 * **webhookMessageData?**: [WebhookMessageData](https://birdie0.github.io/discord-webhooks-guide/discord_webhook.html)
+* **timeoutMs?**: number
 * **callback?**: (error?: string) => void
 
 Example:
@@ -85,6 +86,7 @@ exports["discord-screenshot"]:requestClientScreenshotUploadToDiscord(
             }
         }
     },
+    30000,
     function(error)
         if error then
             return print("^1ERROR: " .. error)
@@ -106,6 +108,7 @@ Parameters:
     * **encoding**: 'png' | 'jpg' | 'webp'
     * **quality**: number
 * **webhookMessageData?**: [WebhookMessageData](https://birdie0.github.io/discord-webhooks-guide/discord_webhook.html)
+* **timeoutMs?**: number
 * **callback?**: (error?: string) => void
 
 Example:
@@ -133,6 +136,7 @@ exports["discord-screenshot"]:requestCustomClientScreenshotUploadToDiscord(
             }
         }
     },
+    30000,
     function(error)
         if error then
             return print("^1ERROR: " .. error)

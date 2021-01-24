@@ -10,7 +10,7 @@ class Screenshoter {
         this._options = options;
     }
 
-    takeScreenshot(player: string | number) {
+    takeScreenshot(player: string | number, timeoutMs = 60000) {
         return timeout(
             new Promise<File>((resolve, reject) => {
                 global.exports['screenshot-basic'].requestClientScreenshot(
@@ -28,7 +28,7 @@ class Screenshoter {
                     }
                 );
             }),
-            30000
+            timeoutMs
         );
     }
 }
