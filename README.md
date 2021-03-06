@@ -12,7 +12,7 @@
 > You can also read this in [Portuguese](https://github.com/jaimeadf/discord-screenshot/blob/master/README.pt.md).
 
 `discord-screenshot` is a resource for [FiveM](https://fivem.net) that captures the screen of a player and uploads it to
-a discord's webhook.
+a discord webhook.
 
 [![Showcase](https://yt-embed.herokuapp.com/embed?v=c9h40LoLky8)](https://youtu.be/c9h40LoLky8)
 
