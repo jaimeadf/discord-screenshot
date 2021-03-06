@@ -29,6 +29,7 @@ webhook do discord.
 * **framework** - A framework que você está usando (`vrp` ou `none`).
 * **commandName** - O nome do comando.
 * **commandPermission** - A permissão para usar o comando.
+* **hiddenIdentifiers** - Uma lista dos identificadores que não serão mostrados no embed (ex. `ip`).
 * **screenshotOptions**
     * **encoding** - O formato do arquivo (`png`, `jpg` ou `webp`)
     * **quality** - A qualidade da imagem de 0.0 a 1.0.

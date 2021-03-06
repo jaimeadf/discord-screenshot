@@ -13,11 +13,12 @@ class VrpScreenshotCommand extends ScreenshotCommand {
     constructor(
         name: string,
         permission: string,
+        hiddenIdentifiers: string[],
         webhookClient: WebhookClient,
         screenshoter: Screenshoter,
         vrp: VrpProxy.Handlers
     ) {
-        super(name, permission, webhookClient, screenshoter);
+        super(name, permission, hiddenIdentifiers, webhookClient, screenshoter);
         this._vrp = vrp;
     }
 

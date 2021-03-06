@@ -22,6 +22,7 @@ const commandFactory = createCommandFactory(settings.framework);
 const screenshotCommand = commandFactory.createScreenshotCommand(
     settings.commandName,
     settings.commandPermission,
+    settings.hiddenIdentifiers,
     webhookClient,
     screenshoter
 );

@@ -6,6 +6,7 @@ interface Settings {
     framework: Framework;
     commandName: string;
     commandPermission: string;
+    hiddenIdentifiers: string[];
     screenshotOptions?: ScreenshotOptions;
 }
 

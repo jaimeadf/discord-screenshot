@@ -14,13 +14,21 @@ import PlayerUtils from '../utils/PlayerUtils';
 
 abstract class ScreenshotCommand extends Command {
     protected readonly permission: string;
+    protected readonly hiddenIdentifiers: string[];
     protected readonly webhookClient: WebhookClient;
     protected readonly screenshoter: Screenshoter;
 
-    constructor(name: string, permission: string, webhookClient: WebhookClient, screenshoter: Screenshoter) {
+    constructor(
+        name: string,
+        permission: string,
+        hiddenIdentifiers: string[],
+        webhookClient: WebhookClient,
+        screenshoter: Screenshoter
+    ) {
         super(name);
         this.permission = permission;
         this.webhookClient = webhookClient;
+        this.hiddenIdentifiers = hiddenIdentifiers;
         this.screenshoter = screenshoter;
     }
 
@@ -55,7 +63,11 @@ abstract class ScreenshotCommand extends Command {
 
         const identifiers = PlayerUtils.getPlayerIdentifiers(target);
         if (identifiers.length > 0) {
-            embed.addField('Identifiers', identifiers.join('\n'));
+            const formattedIdentifiers = identifiers
+                .filter(i => !this.hiddenIdentifiers.includes(i.substring(0, i.indexOf(':'))))
+                .join('\n');
+
+            embed.addField('Identifiers', formattedIdentifiers);
         }
 
         embed.addField('Source', target, true);

@@ -10,10 +10,11 @@ class StandaloneCommandFactory implements CommandFactory {
     public createScreenshotCommand(
         name: string,
         permission: string,
+        hiddenIdentifiers: string[],
         webhookClient: WebhookClient,
         screenshoter: Screenshoter
     ): Command {
-        return new StandaloneScreenshotCommand(name, permission, webhookClient, screenshoter);
+        return new StandaloneScreenshotCommand(name, permission, hiddenIdentifiers, webhookClient, screenshoter);
     }
 }
 

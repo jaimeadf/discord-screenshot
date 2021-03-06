@@ -7,6 +7,7 @@ interface CommandFactory {
     createScreenshotCommand(
         name: string,
         permission: string,
+        hiddenIdentifiers: string[],
         webhookClient: WebhookClient,
         screenshoter: Screenshoter
     ): Command;

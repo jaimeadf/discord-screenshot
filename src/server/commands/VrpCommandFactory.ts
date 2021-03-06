@@ -18,10 +18,11 @@ class VrpCommandFactory implements CommandFactory {
     public createScreenshotCommand(
         name: string,
         permission: string,
+        hiddenIdentifiers: string[],
         webhookClient: WebhookClient,
         screenshoter: Screenshoter
     ): Command {
-        return new VrpScreenshotCommand(name, permission, webhookClient, screenshoter, this._vrp);
+        return new VrpScreenshotCommand(name, permission, hiddenIdentifiers, webhookClient, screenshoter, this._vrp);
     }
 }
 
