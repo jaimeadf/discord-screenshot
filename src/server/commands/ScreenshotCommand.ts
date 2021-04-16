@@ -61,13 +61,9 @@ abstract class ScreenshotCommand extends Command {
         embed.setTimestamp();
         embed.setFooter(`Requested by ${requester !== '0' ? GetPlayerName(requester) ?? 'Unknown' : 'Server Console'}`);
 
-        const identifiers = PlayerUtils.getPlayerIdentifiers(target);
+        const identifiers = this.getFilteredPlayerIdentifiers(target);
         if (identifiers.length > 0) {
-            const formattedIdentifiers = identifiers
-                .filter(i => !this.hiddenIdentifiers.includes(i.substring(0, i.indexOf(':'))))
-                .join('\n');
-
-            embed.addField('Identifiers', formattedIdentifiers);
+            embed.addField('Identifiers', identifiers.join('\n'));
         }
 
         embed.addField('Source', target, true);
@@ -81,6 +77,11 @@ abstract class ScreenshotCommand extends Command {
         }
 
         return embed;
+    }
+
+    private getFilteredPlayerIdentifiers(player: string) {
+        const regex = new RegExp(`^(${this.hiddenIdentifiers.join('|')}):`);
+        return PlayerUtils.getPlayerIdentifiers(player).filter(i => !regex.test(i));
     }
 }
 
