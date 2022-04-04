@@ -18,7 +18,7 @@ webhook do discord.
 
 1. Certifique-se que seus artefatos ([windows](https://runtime.fivem.net/artifacts/fivem/build_server_windows/master)
    ou [linux](https://runtime.fivem.net/artifacts/fivem/build_proot_linux/master)) estão atualizados.
-2. Extraia o último arquivo zip em [releases](https://github.com/jaimeadf/discord-screenshot/releases) na sua pasta
+2. Extraia o último arquivo zip em [releases](https://github.com/jaimeadf/discord-screenshot/releases) (`discord-screenshot-x-x-x.zip`) na sua pasta
    resources.
 3. Adicione `ensure screenshot-basic` e `ensure discord-screenshot` no seu `server.cfg`.
 4. Ajuste a [configuração](#configuração) do resource no `settings.json`.
